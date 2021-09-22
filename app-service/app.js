@@ -10,6 +10,7 @@ var pdfRouter = require('./routes/pdf');
 var app = express();
 
 // view engine setup
+app.set('tplsFolder', path.join(__dirname, 'tpls'));
 app.set('appModulesFolder', path.join(__dirname, 'appModules'));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');

@@ -2,11 +2,15 @@ const fs = require('fs'), path = require('path');
 const pdf = require('html-pdf');
 module.exports = class PDF  {
   constructor(req, res, next) {
-    this.dataFolder = "/var/_shared/PDF";
-    this.startTime = new Date().getTime();
     this.cfile = '';
     this.req = req;
     this.res = res; 
+  }
+  readTemplate(callback) {
+    const me = this;
+    fs.readFile(me.req.app.get('tplsFolder') + '/pdfs/foodieAuthentication.html', 'utf-8', (err, data)=> {
+        callback((err) ? err.message : data);
+    });
   }
   sendPDF() {
     const me = this;
@@ -18,18 +22,17 @@ module.exports = class PDF  {
         'bottom': '0.5in',
         'left': '0.5in'
       }};
-
-      pdf.create('html', options, function(err, buffer){
-        me.res.sendFile(buffer.filename);
-
-      });
-      /*
-      pdf.create('doc', options).toFile('/tmp/fnPDF.pdf', (err, res) => {
-        me.res.sendFile(res.filename);
-        // me.afterProcessFile((!err)? true : false);
-      });*/
+      me.readTemplate(
+        (html)=> {
+          pdf.create(html, options, function(err, buffer){
+            me.res.sendFile(buffer.filename, ()=> {
+              fs.unlink(buffer.filename, ()=> {});
+              });
+          });
+        }
+      );
     } catch (e) {
-      me.res.send('8891');
+      me.res.send({status:'failure', message : e.message});
     }
     
   }
