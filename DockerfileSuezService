@@ -11,4 +11,4 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt update && apt autoremove
 RUN apt-get install wkhtmltopdf -y
 
-CMD cd /var/app && npm start
+CMD cd /var/app && npm install && npm start
