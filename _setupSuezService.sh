@@ -4,9 +4,9 @@ ROOTDIR=$(dirname $(dirname $(pwd)))
 
 cd ${FULLDIR}
 
-docker stop dishfu-suez-service-container && docker rm dishfu-suez-service-container  && docker image rm dishfu-suez-service-image 
+docker stop suez-service-container && docker rm suez-service-container  && docker image rm suez-service-image 
 # --- && docker image prune -f
-docker image build --file ${FULLDIR}/DockerfileSuezService -t dishfu-suez-service-image .
+docker image build --file ${FULLDIR}/DockerfileSuezService -t suez-service-image .
 
 MAIN_NET="33.33.33"
 MAIN_IP="33.33.33.254"
@@ -19,4 +19,4 @@ docker network create \
 
 docker run -p 2000:3000 \
     --network network_dishfu --restart on-failure \
-    --name dishfu-suez-service-container -d dishfu-suez-service-image
+    --name suez-service-container -d suez-service-image
