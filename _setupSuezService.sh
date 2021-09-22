@@ -4,10 +4,9 @@ ROOTDIR=$(dirname $(dirname $(pwd)))
 
 cd ${FULLDIR}
 
-echo ${FULLDIR}=====
 docker stop suez-service-container && docker rm suez-service-container  && docker image rm suez-service-image 
 # --- && docker image prune -f
-docker image build --file ${FULLDIR}/DockerfileSuezService -t suez-service-image  .
+docker image build --file ${FULLDIR}/DockerfileSZService -t suez-service-image  .
 
 MAIN_NET="33.33.33"
 MAIN_IP="33.33.33.254"
