@@ -5,8 +5,8 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   delete require.cache[req.app.get('appModulesFolder') +'/pdfModule.js'];
   const PDF  = require(req.app.get('appModulesFolder') +'/pdfModule.js');
-  const pdf = new PDF();
-  res.send(pdf.sendPDF());
+  const pdf = new PDF(req, res, next);
+  pdf.sendPDF();
 });
 
 module.exports = router;
