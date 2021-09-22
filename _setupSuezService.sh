@@ -18,5 +18,6 @@ docker network create \
     network_dishfu &> /dev/null
 
 docker run -p 2000:3000 \
+    -v "${FULLDIR}/app-service":/var/app
     --network network_dishfu --restart on-failure \
     --name suez-service-container -d suez-service-image
