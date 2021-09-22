@@ -4,6 +4,7 @@ ROOTDIR=$(dirname $(dirname $(pwd)))
 
 cd ${FULLDIR}
 
+echo ${FULLDIR}=====
 docker stop suez-service-container && docker rm suez-service-container  && docker image rm suez-service-image 
 # --- && docker image prune -f
 docker image build --file ${FULLDIR}/DockerfileSuezService -t suez-service-image  .
