@@ -3,7 +3,10 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send(__dirname + '_pdf--' + req.app.get('appModulesFolder'));
+  delete require.cache[eq.app.get('appModulesFolder') +'/pdf.js'];
+  const PDF  = require(eq.app.get('appModulesFolder') +'/pdf.js');
+  const pdf = new PDF();
+  res.send(pdf.sendPDF());
 });
 
 module.exports = router;
