@@ -21,9 +21,13 @@ module.exports = class QRPDF  {
   readTemplate(callback) {
     const me = this;
     const tplFn = (this.req.body) ? '' : this.req.body.template;
-    fs.readFile(me.req.app.get('tplsFolder') + '/pdfs/' + tplFn, 'utf-8', (err, data)=> {
+    if (!tplFn) {
+      callback('missing template');
+    } else {
+      fs.readFile(me.req.app.get('tplsFolder') + '/pdfs/' + tplFn, 'utf-8', (err, data)=> {
         callback((err) ? err.message : data);
-    });
+      });
+    }
   }
   qr(callback) {
     const me = this;
