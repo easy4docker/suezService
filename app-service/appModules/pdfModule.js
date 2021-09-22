@@ -7,7 +7,7 @@ module.exports = class PDF  {
       this.cfile = '';
     }
     sendPDF() {
-      return '1235';
+      return '1235678';
     }
     startSession() {
         const me = this;
