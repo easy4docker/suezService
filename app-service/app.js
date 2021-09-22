@@ -24,8 +24,7 @@ app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  res.send('5678-' + req.path);
-  // next(createError(404));
+  next(createError(404));
 });
 
 // error handler
