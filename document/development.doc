@@ -1,3 +1,51 @@
 1. create project 
     #npx express-generator suez-service
 
+2. change root configuration
+
+    erver {
+        #listen       80;
+        #listen  [::]:80;
+        listen 443 ssl;
+        ssl on;
+        ssl_certificate /var/certs/suez_bid/suez_bid.crt;
+        ssl_certificate_key /var/certs/suez_bid/suez_bid_key.txt;
+        server_name  suez.bid;
+
+        root   /usr/share/nginx/html;
+
+        location /webService/ {
+            proxy_pass http://33.33.33.254:2000/;
+        }
+
+        location / {
+        return 302 $scheme://www.suez.bid$request_uri;
+        }
+
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+        root   /usr/share/nginx/html/support.dishfu.com;
+        }
+    }
+
+    server {
+        listen       80;
+        listen  [::]:80;
+        server_name  suez.bid;
+        return 301 https://$host$request_uri;
+    }
+
+3. add roure qrpdr.js
+
+
+Web Access:
+https://suez.bid/webService/qrpdf
+http://suez.bid and https://suez.bid  will be redirect to https://www.suez.bid 
+
+post: {
+    template: '',
+    data : {
+        qrqrLink: ''
+        ....
+    }
+}
