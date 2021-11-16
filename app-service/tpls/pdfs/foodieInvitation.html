@@ -4,14 +4,21 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confirmation Document</title>
+    <title>Foodie Invitation Letter</title>
 </head>
 <body>
-    foodieAuthMai ${linkUrl}
-    <p style="float:right"><img src="${qrCode}"/></p>
-    <div>
+    <div style="height:2.3in; padding-top:0.1in;">
+        <h5>${address}</h5>
+        <h3>${name}</h3>
+    </div>
+    <div style="height:2.6in; border-top:1px dashed #888; border-bottom:1px dashed #888"></div>
+    
+    <p style="page-break-before : always"></p>
+    
+    <p  style="padding-top:0.2in;">
+        <img src="${qrCode}" with="300"  style="float:right"/>
         <p>
-           === authUserMail,
+            Dear ${name},
         </p>
         <p>
             Thanks for your apply the foodie role with us! We hope you’re enjoying your new product.
@@ -25,7 +32,7 @@
         <p>
             Dishfu.com.
         </p> 
-    </div>
+    </p>
     <div style="float: clear-both"></div>
 
 </body>

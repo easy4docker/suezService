@@ -9,6 +9,12 @@ var qrPDFRouter = require('./routes/qrpdf');
 
 var app = express();
 
+app.all('*', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, X-Auth, FingerPrint, Accept');
+  next();
+});
+
 // view engine setup
 app.set('tplsFolder', path.join(__dirname, 'tpls'));
 app.set('appModulesFolder', path.join(__dirname, 'appModules'));

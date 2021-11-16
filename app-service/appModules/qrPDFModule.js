@@ -6,7 +6,6 @@ module.exports = class QRPDF  {
     this.cfile = '';
     this.req = req;
     this.res = res;
-    
   }
   tpl = (str, vars) =>{
     var func = new Function(...Object.keys(vars),  "return `"+ str +"`;");
@@ -18,11 +17,10 @@ module.exports = class QRPDF  {
     }
     return  html;
   }
-  readTemplate(callback) {
+  readTemplate(tplFn, callback) {
     const me = this;
-    const tplFn = (this.req.body) ? '' : this.req.body.template;
     if (!tplFn) {
-      callback('missing template');
+      callback('missing template-1-');
     } else {
       fs.readFile(me.req.app.get('tplsFolder') + '/pdfs/' + tplFn, 'utf-8', (err, data)=> {
         callback((err) ? err.message : data);
@@ -31,7 +29,7 @@ module.exports = class QRPDF  {
   }
   qr(callback) {
     const me = this;
-    const qrLink = (this.req.body || !this.req.body.data) ? '' : this.req.body.data.qrLink;
+    const qrLink = (!this.req.body || !this.req.body.data) ? '' : this.req.body.data.qrLink;
     if (qrLink) {
       QRCode.toDataURL(qrLink, { 
         width:256,
@@ -58,9 +56,11 @@ module.exports = class QRPDF  {
         'bottom': '0.5in',
         'left': '0.5in'
       }};
-      me.readTemplate((tplhtml)=> {
+      let tplFn = !me.req.body ? '' : me.req.body.template;
+      me.readTemplate(tplFn, (tplhtml)=> {
           me.qr((base64Str)=> {
             const bodyData = (!me.req.body || !me.req.body.data) ? {} : me.req.body.data;
+            bodyData.qrCode=base64Str;
             let html = me.tpl(tplhtml,bodyData);
             pdf.create(html, options, function(err, buffer){
               me.res.sendFile(buffer.filename, ()=> {
